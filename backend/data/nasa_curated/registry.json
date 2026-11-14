@@ -1,0 +1,200 @@
+{
+  "registry_version": "nasa-curated-1",
+  "schema_version": 1,
+  "curation_method": "Source-table transcription and byte-preserved official NASA PSI CSV; source files independently downloaded and SHA256 verified. No source PDFs or temporary signed URLs are bundled.",
+  "datasets": [
+    {
+      "id": "nasa-cr-182185",
+      "title": "An Experimental Study of Opposed Flow Diffusion Flame Extinction Over a Thin Fuel in Microgravity",
+      "source_url": "https://ntrs.nasa.gov/citations/19890014267",
+      "doi": null,
+      "license": "Work of the US Gov. Public Use Permitted. (NTRS metadata)",
+      "record_count": 13,
+      "training_row_count": 11,
+      "observation_window_s": 5.18,
+      "scope": {
+        "materials": [
+          "cellulose_thin"
+        ],
+        "material_description": "99 percent cellulose / 1 percent polyamide resin laboratory wipes",
+        "thickness_mm": [
+          0.076
+        ],
+        "pressure_kpa": [
+          101.325
+        ],
+        "o2_percent_range": [
+          14.0,
+          21.0
+        ],
+        "flow_cm_s_range": [
+          0.81,
+          6.75
+        ],
+        "flow_direction": "opposed relative flow from moving fuel through quiescent oxidizer",
+        "gravity": "drop-tower microgravity, nominal numeric gravity_g=0",
+        "observation_counts": {
+          "table_rows": 13,
+          "measured_burning_rates": 8,
+          "left_censored_burning_rates": 2,
+          "observed_extinctions": 3,
+          "complete_rate_schema_eligible_rows": 11
+        },
+        "experiment_groups": 1
+      },
+      "source_files": [
+        {
+          "name": "NASA-CR-182185.pdf",
+          "url": "https://ntrs.nasa.gov/api/citations/19890014267/downloads/19890014267.pdf",
+          "sha256": "9c41fa94782f42d6c2dcc1e341b4f43b95800e7c5513d133c31f60c3e6758bd0",
+          "bytes": 968354,
+          "download_method": "direct"
+        }
+      ],
+      "limitations": [
+        "Only13 test conditions and one thin cellulosic fuel; cannot validate predictions across five materials or pressure variation.",
+        "Two rates are left-censored and must not be replaced with zero or arbitrary positive values.",
+        "No extinction within a5.18-second window is right-censored survival, not evidence of indefinite sustained burning.",
+        "The report states four extinctions overall but Table I lists three; do not invent the omitted fourth row.",
+        "Table I lacks original run IDs; derived row IDs should remain explicitly labelled and their experimental independence discussed.",
+        "Use nominal environmental fuel speed; flame-relative velocity adds measured flame propagation and would leak target information.",
+        "All training rows share experiment_id and campaign NASA-CR-182185; row-level random splits would overstate independent evidence."
+      ],
+      "field_provenance": {
+        "o2_percent": "Table I PDF page7, measured oxygen mole percent; Appendix PDF page15 states approximately +/-0.1 percentage-point uncertainty.",
+        "flow_cm_s": "Table I fuel speed, moving sample through quiescent oxidizer; equals free-stream opposed speed relative to sample. Do not use characteristic velocity, which includes flame speed.",
+        "spread_rate_mm_s": "Table I spread rate cm/sec multiplied by10; rate is a time-average and Appendix PDF page15 reports measurement errors from0.08 to0.15cm/sec.",
+        "thickness_mm": "PDF page3 states half-thickness0.0038cm, so full thickness=2*.0038*10=.076mm.",
+        "pressure_kpa": "Appendix PDF page15 states chamber filled with oxygen then nitrogen to1atm; exact conversion1atm=101.325kPa.",
+        "ignited": "Procedures and Results describe ignited flames in all13 conditions; Table I extinction column refers to post-ignition extinction.",
+        "gravity": "PDF page3 describes NASA Lewis5.18-second free fall, not normal gravity. Numericgravity_g=0 would be a microgravity idealization rather than a measured exact zero."
+      },
+      "curated_file": {
+        "name": "nasa_cr_182185_observations.json",
+        "format": "json",
+        "sha256": "fe88a1b367dfc65da47876073a1596e4b5b8aca873fd8d87a6f9472c18c93091"
+      }
+    },
+    {
+      "id": "psi-25-bass-ii",
+      "title": "Burning and Suppression of Solids-II (BASS-II): official experiment catalogue",
+      "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+      "doi": "10.60555/4qc4-de67",
+      "license": "CC0-1.0",
+      "record_count": 129,
+      "training_row_count": 0,
+      "observation_window_s": null,
+      "scope": {
+        "study_id": "PSI-25",
+        "study_version": 4,
+        "pi_record_counts": {
+          "Bhattacharjee": 22,
+          "Ferkul": 4,
+          "Miller": 20,
+          "Olson": 27,
+          "Fernandez-Pello": 27,
+          "T'ien": 29
+        },
+        "materials_and_geometries": "Thin/thick PMMA sheets, PMMA rods, Nomex III, wax candle, SIBAL fabric and sphere; not all have opposed flow.",
+        "raw_field_policy": "Preserve original CSV headers, string values and missing cells without target inference."
+      },
+      "source_files": [
+        {
+          "name": "PSI-25_BASS-II_Test.Matrices.xlsx",
+          "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-25/download?file=692480587f6aa6a830210601&version=2&studyVersion=4&redirect=false",
+          "sha256": "1a3b283dd0adec861793bbc4a454aab64d398cd32d6f37d7a1ad0f642879e686",
+          "bytes": 28956,
+          "download_method": "psi_signed_redirect",
+          "file_id": "692480587f6aa6a830210601",
+          "file_version": 2,
+          "study_version": 4
+        },
+        {
+          "name": "PSI-25_BASS-II_ReadMe.docx",
+          "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-25/download?file=692480587f6aa6a830210602&version=2&studyVersion=4&redirect=false",
+          "sha256": "69f32647792f54ab2a561e3cdafc6c87d854564fe487aed2b09265286bd84e1d",
+          "bytes": 21538,
+          "download_method": "psi_signed_redirect",
+          "file_id": "692480587f6aa6a830210602",
+          "file_version": 2,
+          "study_version": 4
+        },
+        {
+          "name": "PSI-25_BASS-II.csv",
+          "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-25/download?file=67a3a17b09ed061032c19775&version=1&studyVersion=4&redirect=false",
+          "sha256": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "bytes": 16590,
+          "download_method": "psi_signed_redirect",
+          "file_id": "67a3a17b09ed061032c19775",
+          "file_version": 1,
+          "study_version": 4
+        }
+      ],
+      "limitations": [
+        "Official matrix does not contain spread rate, explicit extinction labels, flow direction, or pressure columns. ReadMe defines geometries by PI. Many Air display values are time-varying strings; reading response time is about1minute. Do not silently cast fan voltage or multi-flow strings to physical speeds.",
+        "Fan display records fan voltage times ten or potentiometer settings, not a calibrated flow velocity.",
+        "Air display is a duct-speed cm/s indicator with about one-minute response time; multi-stage strings are not single numerical conditions.",
+        "Initial/final calibrated oxygen values do not establish stage-specific oxygen.",
+        "Rows include opposed, concurrent and stagnation geometries; PI-specific definitions are in the official ReadMe.",
+        "No complete spread-rate and ignition/extinction targets are supplied by this catalogue; zero training rows are inferred."
+      ],
+      "curated_file": {
+        "name": "psi25_bass_ii.csv",
+        "format": "csv",
+        "sha256": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042"
+      }
+    },
+    {
+      "id": "bass-ii-tm-20210011385",
+      "title": "Burning and Suppression of Solids-II (BASS-II) Summary Report: tabulated evidence",
+      "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+      "doi": null,
+      "license": "Use by or on behalf of the US Gov. Permitted. (NTRS metadata)",
+      "record_count": 41,
+      "training_row_count": 0,
+      "observation_window_s": null,
+      "scope": {
+        "reported_thick_pmma_tests": 20,
+        "tracked_thick_pmma_tests": 18,
+        "spread_rate_stages": 39,
+        "thin_pmma_aggregate_boundaries": 2,
+        "flow_direction": "opposed for the curated tables",
+        "thick_pmma_thickness_mm": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "thin_pmma_thickness_range_mm": [
+          0.1,
+          0.4
+        ],
+        "oxygen_policy": "Stage oxygen remains null; initial/final intervals are retained without invented interpolation."
+      },
+      "source_files": [
+        {
+          "name": "TM-20210011385.pdf",
+          "url": "https://ntrs.nasa.gov/api/citations/20210011385/downloads/TM-20210011385.pdf",
+          "sha256": "5ffa911fd9b6356f204646003fb9342e341810dcdfdf5cb15756e7f01ec5f770",
+          "bytes": 48972416,
+          "download_method": "direct"
+        }
+      ],
+      "limitations": [
+        "Table 5.1 initial/final oxygen does not identify oxygen at each flow stage. Stage oxygen is unknown, not automatically the initial value.",
+        "Table 5.1 has one/two-sided burning and width dependence; preserve these covariates and do not treat all as equivalent to the thermally thin model.",
+        "Table 5.1 does not explicitly state per-stage measured pressure; pressure_kpa left null.",
+        "Positive reported spread-rate stage is a direct observation; do not manufacture separate extinguished/nonignition rows from test termination.",
+        "Thin PMMA Table2.1 has two aggregate boundary estimates, not two full datasets or multiple independent groups.",
+        "Figures 2.11/2.12 are computation, not experimental measurements.",
+        "Table 7.1 SIBAL is concurrent flow, incompatible with the present opposed-flow model without explicit direction-aware handling."
+      ],
+      "curated_file": {
+        "name": "bass_ii_tm_20210011385_observations.json",
+        "format": "json",
+        "sha256": "34a84e4657bcbbcbdd0bf8fbf1f6d3847d420bff0ef8951a885b7e9c4596ecbe"
+      }
+    }
+  ]
+}

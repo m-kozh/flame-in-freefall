@@ -1,0 +1,325 @@
+[
+  {
+    "id": "bre",
+    "name": "Burning Rate Emulator (ACME BRE)",
+    "psi_id": null,
+    "category": ["prevention"],
+    "hardware": "Combustion Integrated Rack (CIR), ACME insert",
+    "fuel": "Gaseous ethylene/N2 on a 25 mm porous burner, emulating solid and liquid fuels",
+    "o2_pct": [21, 40],
+    "pressure_kpa": [56, 101],
+    "flow_cm_s": [0, 0],
+    "key_findings": [
+      "All flames at 21% O2 self-extinguished within 40 s; steady flames were seen at 26.5%, 34% and 40% O2.",
+      "59 successfully ignited tests; NASA human-habitat atmospheres were used."
+    ],
+    "habitat_relevance": ["moon", "rover", "mars"],
+    "source_url": "https://drum.lib.umd.edu/handle/1903/29303"
+  },
+  {
+    "id": "bass2",
+    "name": "Burning and Suppression of Solids II (BASS-II)",
+    "psi_id": null,
+    "category": ["prevention", "suppression"],
+    "hardware": "Microgravity Science Glovebox (MSG), SPICE flow duct",
+    "fuel": "Thin and thick flat samples, PMMA slabs, spheres and cylinders, cotton/fiberglass fabric",
+    "o2_pct": [15, 21],
+    "pressure_kpa": [101, 101],
+    "flow_cm_s": [0, 55],
+    "key_findings": [
+      "Flames are very sensitive to airflow between 0 and 5 cm/s; they survive below 1 cm/s as dim blue flames and can flare up quickly when airflow increases.",
+      "Most tests had heat release rates well below 100 W.",
+      "First ISS use of MSG volume dilution with nitrogen to lower oxygen."
+    ],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://ntrs.nasa.gov/citations/20160000593"
+  },
+  {
+    "id": "bass",
+    "name": "Burning and Suppression of Solids (BASS)",
+    "psi_id": null,
+    "category": ["prevention", "suppression"],
+    "hardware": "Microgravity Science Glovebox (MSG)",
+    "fuel": "Solid samples of different shapes, including cotton/fiberglass fabric",
+    "o2_pct": [21, 21],
+    "pressure_kpa": [101, 101],
+    "flow_cm_s": null,
+    "key_findings": [
+      "One of the first investigations of extinguishing fuels burning in microgravity; assessed nitrogen as a suppressant."
+    ],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://www.nasa.gov/missions/station/studying-combustion-and-fire-safety/"
+  },
+  {
+    "id": "saffire13",
+    "name": "Spacecraft Fire Safety Demonstration (Saffire I–III)",
+    "psi_id": null,
+    "category": ["prevention"],
+    "hardware": "Uncrewed Cygnus cargo vehicle after leaving the ISS",
+    "fuel": "Cotton/fiberglass (SIBAL) fabric, 40.6 x 94 cm; Saffire II: smaller material samples",
+    "o2_pct": [21, 21],
+    "pressure_kpa": [101, 101],
+    "flow_cm_s": [20, 20],
+    "key_findings": [
+      "First large-scale fire inside a spacecraft; the sample was an order of magnitude larger than earlier microgravity tests.",
+      "Concurrent flames reached a steady size and spread rate instead of accelerating as they do on Earth.",
+      "Saffire II objective: verify oxygen flammability limits in low gravity."
+    ],
+    "habitat_relevance": ["iss", "moon", "rover"],
+    "source_url": "https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/20170008805.pdf"
+  },
+  {
+    "id": "saffire45",
+    "name": "Saffire IV–V",
+    "psi_id": null,
+    "category": ["prevention", "suppression"],
+    "hardware": "Uncrewed Cygnus cargo vehicle",
+    "fuel": "PMMA, cotton fabric, cotton/fiberglass blend, Nomex; samples 40 cm wide",
+    "o2_pct": [22, 26.2],
+    "pressure_kpa": [70.7, 100],
+    "flow_cm_s": [0, 20],
+    "key_findings": [
+      "Tested exploration-like atmospheres (~26% O2 at ~71 kPa).",
+      "Extinguishment of thin charring fuels at increased oxygen cannot be assumed to happen rapidly.",
+      "An upstream flame's oxygen 'shadow' inhibited or extinguished downstream flames.",
+      "Heat release up to 10 kW, yet average vehicle conditions stayed acceptable."
+    ],
+    "habitat_relevance": ["moon", "rover", "mars"],
+    "source_url": "https://ntrs.nasa.gov/citations/20210017780",
+    "note": "Verify whether this dataset is in PSI."
+  },
+  {
+    "id": "saffire6",
+    "name": "Saffire VI",
+    "psi_id": null,
+    "category": ["prevention", "detection"],
+    "hardware": "Uncrewed Cygnus cargo vehicle, far-field diagnostics",
+    "fuel": "Thick fuels incl. two-sided PMMA",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": [0, 20],
+    "key_findings": [
+      "Smoke and gaseous products, not heat, are the main hazard to crew.",
+      "Studied fire impact on the vehicle and post-fire recovery."
+    ],
+    "habitat_relevance": ["iss", "moon", "rover", "mars"],
+    "source_url": "https://ntrs.nasa.gov/api/citations/20240007488/downloads/Saffire%20ICES%202024%20Saffire%20presentation072124small.pdf",
+    "note": "Verify whether this dataset is in PSI."
+  },
+  {
+    "id": "same",
+    "name": "Smoke Aerosol Measurement Experiment (SAME)",
+    "psi_id": null,
+    "category": ["detection"],
+    "hardware": "Microgravity Science Glovebox (MSG)",
+    "fuel": "Overheated Teflon, Kapton, cellulose, silicone rubber, dibutylphthalate",
+    "o2_pct": [21, 21],
+    "pressure_kpa": [101, 101],
+    "flow_cm_s": null,
+    "key_findings": [
+      "A substantial portion of smoke particles were below 500 nm.",
+      "The ISS light-scattering detector often missed the small particles from Teflon and Kapton, both widely used in electronics."
+    ],
+    "habitat_relevance": ["iss", "moon", "rover", "mars"],
+    "source_url": "https://www.nist.gov/node/1863886"
+  },
+  {
+    "id": "samer",
+    "name": "SAME Reflight (SAME-R)",
+    "psi_id": null,
+    "category": ["detection"],
+    "hardware": "Microgravity Science Glovebox (MSG)",
+    "fuel": "Common spacecraft materials (pyrolysis smoke)",
+    "o2_pct": [21, 21],
+    "pressure_kpa": [101, 101],
+    "flow_cm_s": null,
+    "key_findings": [
+      "Expedition 24 (2010): added diagnostics and an expanded test matrix to guide future smoke detector design."
+    ],
+    "habitat_relevance": ["iss", "moon", "rover", "mars"],
+    "source_url": "https://ui.adsabs.harvard.edu/abs/2012ESASP.699E..82U/abstract"
+  },
+  {
+    "id": "daft",
+    "name": "Dust and Aerosol Measurement Feasibility Test (DAFT, DAFT-2)",
+    "psi_id": null,
+    "category": ["detection"],
+    "hardware": "One of the SAME smoke instruments, used to measure dust",
+    "fuel": "None (dust)",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": null,
+    "key_findings": [
+      "Background dust matters for detector design: it can trigger false alarms (relevant for dusty lunar habitats)."
+    ],
+    "habitat_relevance": ["moon", "mars"],
+    "source_url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/"
+  },
+  {
+    "id": "flex",
+    "name": "Flame Extinguishment Experiment (FLEX)",
+    "psi_id": null,
+    "category": ["suppression"],
+    "hardware": "CIR, Multi-user Droplet Combustion Apparatus (MDCA)",
+    "fuel": "Heptane and methanol droplets, 1.5–5 mm",
+    "o2_pct": [10, 40],
+    "pressure_kpa": [71, 304],
+    "flow_cm_s": [0, 0],
+    "key_findings": [
+      "Limiting oxygen index in O2/N2: ~0.15 for heptane, ~0.12 for methanol.",
+      "Tested CO2 and helium dilution as suppressants.",
+      "Discovered 'cool flames': heptane droplets kept burning invisibly after the visible flame went out — hot-flame-only safety procedures may be inadequate."
+    ],
+    "habitat_relevance": ["iss", "moon", "rover", "mars"],
+    "source_url": "https://link.springer.com/doi/10.1007/s12217-014-9372-2"
+  },
+  {
+    "id": "flex2",
+    "name": "FLEX-2",
+    "psi_id": null,
+    "category": ["suppression"],
+    "hardware": "CIR, MDCA",
+    "fuel": "Liquid fuel droplets (e.g. heptane, methanol)",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": null,
+    "key_findings": ["Follow-on droplet combustion study of burning and extinction physics."],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/"
+  },
+  {
+    "id": "cfi",
+    "name": "Cool Flames Investigation (CFI)",
+    "psi_id": null,
+    "category": ["suppression"],
+    "hardware": "CIR, MDCA",
+    "fuel": "Liquid fuel droplets",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": null,
+    "key_findings": ["Follow-on to FLEX studying the cool-flame regime of droplet burning."],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/"
+  },
+  {
+    "id": "cfig",
+    "name": "Cool Flames Investigation with Gases (ACME CFI-G)",
+    "psi_id": "PSI-159",
+    "category": ["prevention"],
+    "hardware": "CIR, ACME insert, spherical porous burner",
+    "fuel": "Ethane, propane, n-butane; normal and inverse (inside-out) flames",
+    "o2_pct": [21, 85],
+    "pressure_kpa": [101, 203],
+    "flow_cm_s": [0, 0],
+    "key_findings": [
+      "Highest-oxygen microgravity tests in PSI: up to 85% O2 flowing from the burner (inverse flames).",
+      "First spherical cool diffusion flames of gaseous fuels — only obtained for n-butane at 2 bar and 39% O2."
+    ],
+    "habitat_relevance": ["moon", "rover", "suit"],
+    "source_url": "https://par.nsf.gov/servlets/purl/10426596"
+  },
+  {
+    "id": "efield",
+    "name": "Electric-Field Effects on Laminar Diffusion Flames (ACME E-FIELD)",
+    "psi_id": null,
+    "category": ["prevention"],
+    "hardware": "CIR, ACME insert",
+    "fuel": "Gaseous fuels",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": null,
+    "key_findings": [
+      "Electric fields acting on flame ions mimic partial gravity — the closest thing in PSI to Moon/Mars gravity data.",
+      "Showed potential to reduce emissions from non-premixed flames."
+    ],
+    "habitat_relevance": ["moon", "mars"],
+    "source_url": "https://www.nasa.gov/?p=96465"
+  },
+  {
+    "id": "sflame",
+    "name": "Structure and Response of Spherical Diffusion Flames (ACME s-Flame)",
+    "psi_id": null,
+    "category": ["prevention"],
+    "hardware": "CIR, ACME insert",
+    "fuel": "Gaseous fuels",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": [0, 0],
+    "key_findings": ["Flame growth and extinction data for improving computational models."],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://www.nasa.gov/?p=96465"
+  },
+  {
+    "id": "flamedesign",
+    "name": "Flame Design (ACME)",
+    "psi_id": null,
+    "category": ["prevention"],
+    "hardware": "CIR, ACME insert",
+    "fuel": "Gaseous fuels, oxygen-enriched",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": [0, 0],
+    "key_findings": [
+      "First quasi-steady non-premixed spherical flames; larger flames died from radiative heat loss.",
+      "Studied soot production to design soot-free, robust flames."
+    ],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://www.inverse.com/science/iss-fire-experiments"
+  },
+  {
+    "id": "cldflame",
+    "name": "Coflow Laminar Diffusion Flame (ACME CLD Flame)",
+    "psi_id": null,
+    "category": ["prevention"],
+    "hardware": "CIR, ACME insert",
+    "fuel": "Gaseous fuels from pure (sooty) to highly diluted",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": null,
+    "key_findings": ["Benchmark data at sooty and near-extinction extremes for computational models."],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://www.universetoday.com/156351/fire-acts-strangely-in-microgravity-astronauts-have-lit-more-than-1500-fires-on-the-space-station-to-figure-out-why"
+  },
+  {
+    "id": "spice",
+    "name": "Smoke Point In Co-flow Experiment (SPICE)",
+    "psi_id": null,
+    "category": ["prevention"],
+    "hardware": "Microgravity Science Glovebox (MSG), fan-driven flow duct",
+    "fuel": "Gaseous fuels",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": null,
+    "key_findings": ["Smoke point of gas jet flames in co-flow; its flow duct was reused by BASS, BASS-II and SLICE."],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://ntrs.nasa.gov/api/citations/20210021781/downloads/JASMAC%20ACME%20paper%2020210921.pdf"
+  },
+  {
+    "id": "slice",
+    "name": "Structure & Liftoff In Combustion Experiment (SLICE)",
+    "psi_id": null,
+    "category": ["prevention"],
+    "hardware": "Microgravity Science Glovebox (MSG), SPICE flow duct",
+    "fuel": "Gaseous fuels",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": null,
+    "key_findings": ["Flame structure and liftoff (2012); precursor to ACME's CLD Flame."],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://ntrs.nasa.gov/api/citations/20210021781/downloads/JASMAC%20ACME%20paper%2020210921.pdf"
+  },
+  {
+    "id": "psi117",
+    "name": "Cool Flame Dynamics CFD Analysis (ground study using FLEX data)",
+    "psi_id": "PSI-117",
+    "category": ["suppression"],
+    "hardware": "Ground investigation — OpenFOAM 3-D CFD model",
+    "fuel": "n-alkane droplets (modelled)",
+    "o2_pct": null,
+    "pressure_kpa": null,
+    "flow_cm_s": null,
+    "key_findings": ["Uses FLEX flight data from PSI to quantify how external thermal and convective perturbations affect cool flames."],
+    "habitat_relevance": ["iss"],
+    "source_url": "https://psi.nasa.gov/physci/repo/search?q=combustion"
+  }
+]

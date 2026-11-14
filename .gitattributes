@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+# Curated NASA snapshots have pinned byte-level SHA256 identities.
+backend/data/nasa_curated/* -text
+# Keep the official CSV's original CRLF and whitespace as source evidence.
+backend/data/nasa_curated/psi25_bass_ii.csv -whitespace
