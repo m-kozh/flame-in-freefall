@@ -9,12 +9,15 @@ import { ENVIRONMENTS } from "@/data/environments";
 import { getMap, getSuggest, useBackendStatus, useDataSource, useMaterials, type BackendStatus } from "@/lib/api";
 import type { MapRes, SuggestPoint } from "@/lib/types";
 
-const TABS = [
+const ALL_TABS = [
   { id: "atmosphere", label: "Atmosphere shift" },
   { id: "predict", label: "Predict" },
   { id: "evidence", label: "Evidence (PSI)" },
   { id: "ask", label: "Ask AI" },
 ] as const;
+// "Ask AI" only appears once ANTHROPIC_API_KEY is set on the deployment (then redeploy).
+const CHAT_ENABLED = process.env.NEXT_PUBLIC_CHAT_ENABLED === "1";
+const TABS = ALL_TABS.filter((t) => t.id !== "ask" || CHAT_ENABLED);
 
 const STATUS: Record<BackendStatus, { label: string; cls: string; title: string }> = {
   mock: { label: "Mock model — demo data", cls: "border-warn/60 text-warn", title: "BACKEND_URL is not set" },
@@ -28,7 +31,7 @@ export default function Home() {
   const status = useBackendStatus();
   const dataSource = useDataSource();
   const [envId, setEnvId] = useState("moon");
-  const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("atmosphere");
+  const [tab, setTab] = useState<(typeof ALL_TABS)[number]["id"]>("atmosphere");
   const [material, setMaterial] = useState<string>("cotton");
   const [view, setView] = useState<"burn" | "uncertainty">("burn");
   const [map, setMap] = useState<MapRes | null>(null);
@@ -173,7 +176,7 @@ export default function Home() {
         )}
         {tab === "predict" && <PredictPanel env={env} materials={materials} />}
         {tab === "evidence" && <Explorer env={env} />}
-        {tab === "ask" && <Chat env={env} />}
+        {tab === "ask" && CHAT_ENABLED && <Chat env={env} />}
       </div>
 
       <footer className="mt-12 border-t border-line pt-4 text-xs text-ink-3">

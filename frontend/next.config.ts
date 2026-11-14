@@ -8,6 +8,8 @@ const BACKEND_URL = process.env.BACKEND_URL?.replace(/\/$/, "");
 const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_BACKEND_ENABLED: BACKEND_URL ? "1" : "",
+    // Only a yes/no flag reaches the browser — the key itself stays server-side.
+    NEXT_PUBLIC_CHAT_ENABLED: process.env.ANTHROPIC_API_KEY ? "1" : "",
   },
   async rewrites() {
     return BACKEND_URL ? [{ source: "/backend/:path*", destination: `${BACKEND_URL}/:path*` }] : [];
