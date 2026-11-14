@@ -1,6 +1,6 @@
 // MOCK MODEL — stands in for the backend until it is live.
 // Shapes match src/lib/types.ts exactly. Numbers are illustrative, NOT NASA data.
-import type { ExplainRes, MapRes, PredictReq, PredictRes, SuggestRes, TestedPoint } from "./types";
+import type { ExplainRes, MapRes, OptimizeCandidate, OptimizeReq, OptimizeRes, PredictReq, PredictRes, SuggestRes, TestedPoint } from "./types";
 import { MATERIALS } from "@/data/materials";
 
 const P_ISS = 101.3;
@@ -122,4 +122,26 @@ export function mockExplain(): ExplainRes {
       { name: "Pressure", importance: 0.08 },
     ],
   };
+}
+
+export function mockOptimize(req: OptimizeReq): OptimizeRes {
+  const { scenario: s, bounds: b, target_extinction_probability: target } = req;
+  const steps = (lo: number, hi: number) => (lo === hi ? [lo] : Array.from({ length: 24 }, (_, i) => lo + ((hi - lo) * i) / 23));
+  const cands: OptimizeCandidate[] = [];
+  for (const o2 of steps(...b.o2_range))
+    for (const p of steps(...b.pressure_range))
+      for (const f of steps(...b.flow_range)) {
+        const pred = mockPredict({ o2, pressure_kpa: p, flow_cm_s: f, material: s.material });
+        if (pred.extinction_prob < target) continue;
+        const span = (r: [number, number]) => Math.max(r[1] - r[0], 1e-9);
+        const cost = Math.hypot((o2 - s.o2) / span(b.o2_range), (p - s.pressure_kpa) / span(b.pressure_range), (f - s.flow_cm_s) / span(b.flow_range));
+        cands.push({
+          prediction: { ...pred, inputs: { o2_percent: o2, pressure_kpa: p, flow_cm_s: f } },
+          change_cost: cost,
+          deltas: { o2_percent: o2 - s.o2, pressure_kpa: p - s.pressure_kpa, flow_cm_s: f - s.flow_cm_s },
+        });
+      }
+  cands.sort((a, c) => a.change_cost - c.change_cost);
+  const top = cands.slice(0, req.k);
+  return { status: top.length ? "found" : "not_found", target_achievable: top.length > 0, candidates: top, best_available: top[0] ?? null };
 }

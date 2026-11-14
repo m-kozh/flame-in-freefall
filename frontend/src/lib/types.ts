@@ -63,3 +63,25 @@ export type Material = { id: string; name: string; seen_in?: string; thickness_m
 export type MaterialsRes = { materials: Material[] };
 
 // GET /health → { "status": "ok" }
+
+// POST /optimize — smallest change to the controls that makes extinction likely
+export type OptimizeReq = {
+  scenario: { material: string; o2: number; pressure_kpa: number; flow_cm_s: number };
+  bounds: { o2_range: [number, number]; pressure_range: [number, number]; flow_range: [number, number] };
+  target_extinction_probability: number;
+  resolution: number;
+  k: number;
+  supported_only: boolean;
+};
+export type OptimizeCandidate = {
+  prediction: PredictRes & { inputs?: { o2_percent: number; pressure_kpa: number; flow_cm_s: number } };
+  change_cost: number;
+  deltas: { o2_percent: number; pressure_kpa: number; flow_cm_s: number };
+};
+export type OptimizeRes = {
+  status: "found" | "not_found";
+  target_achievable: boolean;
+  candidates: OptimizeCandidate[];
+  best_available: OptimizeCandidate | null;
+  limitations?: string[];
+};

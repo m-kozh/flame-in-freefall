@@ -3,8 +3,8 @@
 // so the site never shows a broken screen. The header badge shows which is in use.
 "use client";
 import { useEffect, useState } from "react";
-import type { DataSource, ExplainRes, ExplainTarget, MapRes, Material, MaterialsRes, PredictReq, PredictRes, SuggestRes } from "./types";
-import { mockExplain, mockMap, mockPredict, mockSuggest } from "./mock";
+import type { DataSource, ExplainRes, ExplainTarget, MapRes, Material, MaterialsRes, OptimizeReq, OptimizeRes, PredictReq, PredictRes, SuggestRes } from "./types";
+import { mockExplain, mockMap, mockOptimize, mockPredict, mockSuggest } from "./mock";
 import { MATERIALS } from "@/data/materials";
 
 export const BACKEND_ENABLED = process.env.NEXT_PUBLIC_BACKEND_ENABLED === "1";
@@ -80,6 +80,27 @@ export const getSuggest = (material: string, pressure_kpa: number) =>
 
 export const getExplain = (target: ExplainTarget = "extinction") =>
   call<ExplainRes>(`/explain?target=${target}`, undefined, () => mockExplain());
+
+// One model call for up to 256 scenarios (backend: POST /predict/batch)
+export const predictBatch = (points: PredictReq[]) =>
+  call<{ predictions: PredictRes[] }>(
+    "/predict/batch",
+    { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ points }) },
+    () => ({ predictions: points.map((p) => mockPredict(p)) }),
+  );
+
+export const optimize = (req: OptimizeReq) =>
+  call<OptimizeRes>("/optimize", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(req) }, () => mockOptimize(req));
+
+// Debounce a value so typing/sliding doesn't fire a request per keystroke
+export function useDebounced<T>(value: T, ms = 350): T {
+  const [v, setV] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setV(value), ms);
+    return () => clearTimeout(t);
+  }, [value, ms]);
+  return v;
+}
 
 const LOCAL_MATERIALS: Material[] = MATERIALS.map(({ id, name, seenIn }) => ({ id, name, seen_in: seenIn }));
 export const getMaterials = () => call<MaterialsRes>("/materials", undefined, () => ({ materials: LOCAL_MATERIALS }));

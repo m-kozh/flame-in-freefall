@@ -28,20 +28,6 @@ const REGIME_LABELS: Record<string, string> = {
   no_ignition: "No ignition",
 };
 
-function Slider({ label, unit, value, min, max, step, onChange }: { label: string; unit: string; value: number; min: number; max: number; step: number; onChange: (v: number) => void }) {
-  return (
-    <label className="block">
-      <div className="mb-1 flex justify-between text-sm">
-        <span className="text-ink-2">{label}</span>
-        <span className="font-mono text-ink">
-          {value} {unit}
-        </span>
-      </div>
-      <input type="range" className="w-full" min={min} max={max} step={step} value={value} onChange={(e) => onChange(+e.target.value)} />
-    </label>
-  );
-}
-
 function RangeBar({ value, lo, hi, max, fmt }: { value: number; lo: number; hi: number; max: number; fmt: (n: number) => string }) {
   const pct = (n: number) => `${Math.min(100, (n / max) * 100)}%`;
   return (
@@ -57,31 +43,18 @@ function RangeBar({ value, lo, hi, max, fmt }: { value: number; lo: number; hi: 
   );
 }
 
-export default function PredictPanel({ env, materials }: { env: Environment; materials: Material[] }) {
-  const [o2, setO2] = useState(Math.min(env.o2, 45));
-  const [p, setP] = useState(env.pressure_kpa);
-  const [flow, setFlow] = useState(env.flow_cm_s);
-  const [material, setMaterial] = useState<string>(materials[0]?.id ?? "cotton");
+export default function PredictPanel({ env, material }: { env: Environment; material: string; materials?: Material[] }) {
   const [res, setRes] = useState<PredictRes | null>(null);
   const [explain, setExplain] = useState<ExplainRes | null>(null);
   const [target, setTarget] = useState<ExplainTarget>("extinction");
 
   useEffect(() => {
-    setO2(Math.min(env.o2, 45));
-    setP(env.pressure_kpa);
-    setFlow(env.flow_cm_s);
-  }, [env]);
-
-  useEffect(() => {
     let alive = true;
-    const t = setTimeout(() => {
-      predict({ o2, pressure_kpa: p, flow_cm_s: flow, material }).then((r) => alive && setRes(r));
-    }, 120);
+    predict({ o2: env.o2, pressure_kpa: env.pressure_kpa, flow_cm_s: env.flow_cm_s, material }).then((r) => alive && setRes(r));
     return () => {
       alive = false;
-      clearTimeout(t);
     };
-  }, [o2, p, flow, material]);
+  }, [env.o2, env.pressure_kpa, env.flow_cm_s, material]);
 
   useEffect(() => {
     let alive = true;
@@ -107,25 +80,10 @@ export default function PredictPanel({ env, materials }: { env: Environment; mat
   const learned = res ? res.spread_rate_mm_s - res.physics_baseline_mm_s : 0;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-      <div className="space-y-5 rounded-xl border border-line bg-surface p-5">
-        <div className="text-sm font-semibold text-ink">Conditions</div>
-        <label className="block text-sm">
-          <span className="text-ink-2">Material</span>
-          <select className="mt-1 w-full rounded-lg border border-line bg-surface-2 px-3 py-2 text-ink" value={material} onChange={(e) => setMaterial(e.target.value)}>
-            {materials.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <Slider label="Oxygen" unit="%" value={o2} min={12} max={45} step={0.5} onChange={setO2} />
-        <Slider label="Pressure" unit="kPa" value={p} min={30} max={110} step={0.5} onChange={setP} />
-        <Slider label="Airflow" unit="cm/s" value={flow} min={0} max={40} step={0.5} onChange={setFlow} />
-        <p className="text-xs text-ink-3">Starts from the {env.name} preset. ISS = 21% / 101.3 kPa.</p>
-      </div>
-
+    <div>
+      <p className="mb-4 text-sm text-ink-3">
+        Model internals for your scenario: {env.o2}% O₂ · {env.pressure_kpa} kPa · {env.flow_cm_s} cm/s. Change the inputs at the top.
+      </p>
       <div className="space-y-6">
         {res && (
           <div className="grid gap-4 md:grid-cols-2">

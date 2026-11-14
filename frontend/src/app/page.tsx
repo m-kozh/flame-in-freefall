@@ -5,13 +5,17 @@ import Verdicts from "@/components/Verdicts";
 import PredictPanel from "@/components/PredictPanel";
 import Explorer from "@/components/Explorer";
 import Chat from "@/components/Chat";
-import { ENVIRONMENTS } from "@/data/environments";
-import { getMap, getSuggest, useBackendStatus, useDataSource, useMaterials, type BackendStatus } from "@/lib/api";
+import ScenarioPanel from "@/components/ScenarioPanel";
+import RiskReport from "@/components/RiskReport";
+import FlameImageCheck from "@/components/FlameImageCheck";
+import { ENVIRONMENTS, type Environment } from "@/data/environments";
+import { getMap, getSuggest, useBackendStatus, useDataSource, useDebounced, useMaterials, type BackendStatus } from "@/lib/api";
 import type { MapRes, SuggestPoint } from "@/lib/types";
 
 const ALL_TABS = [
-  { id: "atmosphere", label: "Atmosphere shift" },
-  { id: "predict", label: "Predict" },
+  { id: "atmosphere", label: "Fire risk" },
+  { id: "predict", label: "Model details" },
+  { id: "image", label: "Flame image check" },
   { id: "evidence", label: "Evidence (PSI)" },
   { id: "ask", label: "Ask AI" },
 ] as const;
@@ -30,13 +34,13 @@ export default function Home() {
   const materials = useMaterials();
   const status = useBackendStatus();
   const dataSource = useDataSource();
-  const [envId, setEnvId] = useState("moon");
+  const [envRaw, setEnv] = useState<Environment>(ENVIRONMENTS[1]); // Moon base
+  const env = useDebounced(envRaw, 350); // fetch only after the user stops typing/sliding
   const [tab, setTab] = useState<(typeof ALL_TABS)[number]["id"]>("atmosphere");
   const [material, setMaterial] = useState<string>("cotton");
   const [view, setView] = useState<"burn" | "uncertainty">("burn");
   const [map, setMap] = useState<MapRes | null>(null);
   const [suggest, setSuggest] = useState<SuggestPoint[]>([]);
-  const env = ENVIRONMENTS.find((e) => e.id === envId)!;
 
   useEffect(() => {
     if (materials.length && !materials.some((m) => m.id === material)) setMaterial(materials[0].id);
@@ -60,7 +64,7 @@ export default function Home() {
             <h1 className="text-xl font-semibold tracking-tight text-ink">Burn Boundary</h1>
           </div>
           <p className="mt-1 max-w-xl text-sm text-ink-2">
-            Every Moon-base fire safety decision rests on ISS data taken in a different atmosphere. See where that data runs out — and what to test next.
+            Enter a cabin atmosphere and a material: see whether a fire would keep burning in microgravity, what would put it out, and where NASA&apos;s data runs out.
           </p>
         </div>
         <span className={`rounded-full border px-3 py-1 text-xs ${STATUS[status].cls}`} title={STATUS[status].title}>
@@ -71,27 +75,7 @@ export default function Home() {
         </span>
       </header>
 
-      {/* Environment switch */}
-      <section className="rounded-2xl border border-line bg-surface p-4">
-        <div className="mb-3 text-xs font-medium uppercase tracking-wider text-ink-3">Habitat atmosphere</div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
-          {ENVIRONMENTS.map((e) => (
-            <button
-              key={e.id}
-              onClick={() => setEnvId(e.id)}
-              className={`rounded-xl border p-3 text-left transition ${e.id === envId ? "border-fire bg-fire/10" : "border-line bg-surface-2 hover:border-ink-3"}`}
-            >
-              <div className="text-sm font-semibold text-ink">{e.name}</div>
-              <div className="mt-0.5 font-mono text-xs text-ink-2">
-                {e.o2}% O₂ · {e.pressure_psi} psi
-              </div>
-            </button>
-          ))}
-        </div>
-        <p className="mt-3 text-xs text-ink-3">
-          {env.note} Gravity: {env.gravity}.
-        </p>
-      </section>
+      <ScenarioPanel env={envRaw} setEnv={setEnv} material={material} setMaterial={setMaterial} materials={materials} />
 
       <nav className="mt-6 flex gap-1 overflow-x-auto border-b border-line">
         {TABS.map((t) => (
@@ -107,6 +91,8 @@ export default function Home() {
 
       <div className="mt-6">
         {tab === "atmosphere" && (
+          <div className="space-y-6">
+          <RiskReport env={env} material={material} materials={materials} />
           <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
             <section className="rounded-2xl border border-line bg-surface p-5">
               <div className="flex flex-wrap items-end justify-between gap-3">
@@ -117,13 +103,6 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <select className="rounded-lg border border-line bg-surface-2 px-2 py-1.5 text-sm text-ink" value={material} onChange={(e) => setMaterial(e.target.value)}>
-                    {materials.map((m) => (
-                      <option key={m.id} value={m.id}>
-                        {m.name}
-                      </option>
-                    ))}
-                  </select>
                   <div className="flex rounded-lg border border-line p-0.5 text-sm">
                     {(["burn", "uncertainty"] as const).map((v) => (
                       <button key={v} onClick={() => setView(v)} className={`rounded-md px-2.5 py-1 capitalize ${view === v ? "bg-surface-2 text-ink" : "text-ink-3"}`}>
@@ -143,7 +122,7 @@ export default function Home() {
 
             <div className="space-y-6">
               <section className="rounded-2xl border border-line bg-surface p-5">
-                <h2 className="text-base font-semibold text-ink">Material verdicts</h2>
+                <h2 className="text-base font-semibold text-ink">All materials in this scenario</h2>
                 <p className="text-xs text-ink-3">At {env.flow_cm_s} cm/s cabin airflow{env.id !== "iss" ? ", compared with ISS air" : ""}</p>
                 <div className="mt-2">
                   <Verdicts env={env} materials={materials} />
@@ -173,8 +152,10 @@ export default function Home() {
               </section>
             </div>
           </div>
+          </div>
         )}
-        {tab === "predict" && <PredictPanel env={env} materials={materials} />}
+        {tab === "predict" && <PredictPanel env={env} material={material} materials={materials} />}
+        {tab === "image" && <FlameImageCheck />}
         {tab === "evidence" && <Explorer env={env} />}
         {tab === "ask" && CHAT_ENABLED && <Chat env={env} />}
       </div>

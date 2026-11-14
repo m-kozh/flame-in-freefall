@@ -58,7 +58,23 @@ export const ENVIRONMENTS: Environment[] = [
     pressure_kpa: 29.6,
     pressure_psi: 4.3,
     gravity: "Any",
-    flow_cm_s: 10,
+    flow_cm_s: 5,
     note: "100% O₂ at 4.3 psi — far outside every tested condition in PSI.",
   },
 ];
+
+export const KPA_PER_PSI = 6.89476;
+
+// A user-defined scenario. Same shape as the presets so every view can use it.
+export function customEnv(o2: number, pressure_kpa: number, flow_cm_s: number): Environment {
+  return {
+    id: "custom",
+    name: "Your scenario",
+    o2,
+    pressure_kpa,
+    pressure_psi: +(pressure_kpa / KPA_PER_PSI).toFixed(1),
+    gravity: "the model covers microgravity only",
+    flow_cm_s,
+    note: "Custom conditions you entered.",
+  };
+}
